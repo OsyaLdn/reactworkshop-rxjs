@@ -1,0 +1,25 @@
+aside {
+  height: 100%;
+  position: absolute;
+  background: white;
+  z-index: 5;
+}
+
+aside .body {
+  height: calc(100% - 54px);
+  overflow-y: scroll;
+}
+
+aside > div {
+  cursor: pointer;
+  padding-bottom: 10px;
+}
+
+aside .react-datepicker-wrapper {
+  padding-right: 30px;
+  padding-left: 10px;
+}
+
+aside td {
+  padding: 5px;
+}
