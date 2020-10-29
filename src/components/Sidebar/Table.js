@@ -1,16 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { getData } from '../../api';
-import { TODAY } from '../../constants';
+import React from 'react';
+import useRxStore from '../../hooks';
+import markersStore from '../../store/markers';
 
 const Table = () => {
-  const [markers, setMarkers] = useState([]);
-
-  useEffect(() => {
-    // TODO: replace Promise by Observable Subscription
-    // TODO: use formattedDay from the <Sidebar /> if it was selected
-    // instead of TODAY()
-    getData(TODAY()).then(setMarkers);
-  }, []);
+  const data = useRxStore(markersStore, markersStore.INITIAL_STATE);
 
   return (
     <table>
@@ -24,7 +17,7 @@ const Table = () => {
           <th>Підозри</th>
         </tr>
         {
-          markers.map(item => (
+          data.markers.map(item => (
             <tr key={item.id}>
               <td>{item.label.uk}</td>
               <td>{item.confirmed}</td>

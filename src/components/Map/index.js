@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ReactMapGL from 'react-map-gl';
-import { getData } from '../../api';
 import { INITIAL_VIEWPORT, TOKEN } from './constants';
 import MarkerItem from '../MarkerItem';
-import { TODAY } from '../../constants';
 import MAP_STYLE from './styles.json';
+import markersStore from '../../store/markers';
+import useRxStore from '../../hooks';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const Map = () => {
   const [viewport, setViewport] = useState(INITIAL_VIEWPORT);
-  const [markers, setMarkers] = useState([]);
-
-  useEffect(() => {
-    // TODO: replace Promise by Observable Subscription
-    // TODO: use formattedDay from the <Sidebar /> if it was selected
-    // instead of TODAY()
-    getData(TODAY()).then(setMarkers);
-  }, []);
+  const data = useRxStore(markersStore, markersStore.INITIAL_STATE);
 
   return (
     <ReactMapGL
@@ -25,7 +18,7 @@ const Map = () => {
       onViewportChange={setViewport}
       mapStyle={MAP_STYLE}
     > 
-      {markers.map(marker => (
+      {data.markers.map(marker => (
         <MarkerItem key={marker.id} marker={marker} />
       ))}
     </ReactMapGL>
